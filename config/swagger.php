@@ -139,16 +139,16 @@ return [
      */
     'parse'                     =>  [
         'docBlock'              =>  true,
-        'security'              =>  true,
+        'security'              =>  false,
     ],
 
     /**
      * Authentication flow values
      */
-    'authentication_flow'       =>  [
-        //'OAuth2'                =>  'authorizationCode',
-        'bearerAuth'            =>  'http',
-    ],
+    // 'authentication_flow'       =>  [
+    //     'OAuth2'                =>  'authorizationCode',
+    //     'bearerAuth'            =>  'http',
+    // ],
 
     /**
      * List here your security middlewares

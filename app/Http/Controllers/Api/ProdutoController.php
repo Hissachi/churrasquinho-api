@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Produto;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreProdutoRequest;
+use App\Http\Requests\UpdateProdutoRequest;
+use Illuminate\Http\Requests;
 
 class ProdutoController extends Controller
 {
@@ -23,9 +25,9 @@ class ProdutoController extends Controller
         return $query->paginate($request->per_page ?? 10);
     }
 
-    public function store(Request $request)
+    public function store(StoreProdutoRequest $request)
     {
-        $produto = Produto::create($request->all());
+        $produto = Produto::create($request->validated());
 
         return response()->json($produto, 201);
     }
@@ -35,14 +37,15 @@ class ProdutoController extends Controller
         return Produto::findOrFail($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProdutoRequest $request, $id)
     {
         $produto = Produto::findOrFail($id);
 
-        $produto->update($request->all());
+        $produto->update($request->validated());
 
-        return response()->json($produto);
+        return response()->json($produto, 201);
     }
+
 
     public function destroy($id)
     {
