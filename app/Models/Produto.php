@@ -11,7 +11,26 @@ class Produto extends Model
         'categoria',
         'quantidade',
         'preco',
-        'unidade',
+        'status',
         'ativo'
     ];
+
+    protected $apprends = ['status'];
+
+    public function getStatusAttribute()
+    {
+        if (!$this->ativo) {
+            return 'inativo';
+        }
+
+        if ($this->quantidade === 0) {
+            return 'esgotado';
+        }
+
+        if ($this->quantidade <= 5) {
+            return 'baixo';
+        }
+
+        return 'disponivel';
+    }
 }

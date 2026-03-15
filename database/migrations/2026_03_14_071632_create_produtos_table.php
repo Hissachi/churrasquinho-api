@@ -12,9 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('categoria');
-            $table->integer('quantidade');
+            $table->unsignedInteger('quantidade');
             $table->decimal('preco', 10, 2);
-            $table->string('unidade');
             $table->boolean('ativo')->default(true);
             $table->timestamps();
         });
