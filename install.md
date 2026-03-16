@@ -30,7 +30,7 @@ Você deve ver:
 Abra o terminal e execute:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/Hissachi/churrasquinho-api.git
 cd churrasquinho-api
 ```
 

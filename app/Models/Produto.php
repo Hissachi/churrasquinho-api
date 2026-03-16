@@ -11,26 +11,35 @@ class Produto extends Model
         'categoria',
         'quantidade',
         'preco',
-        'status',
         'ativo'
     ];
 
-    protected $apprends = ['status'];
+    protected $appends = ['status'];
 
     public function getStatusAttribute()
     {
-        if (!$this->ativo) {
-            return 'inativo';
-        }
-
-        if ($this->quantidade === 0) {
-            return 'esgotado';
-        }
-
-        if ($this->quantidade <= 5) {
-            return 'baixo';
-        }
-
-        return 'disponivel';
+        return match (true) {
+            !$this->ativo => 'inativo',
+            $this->quantidade === 0 => 'esgotado',
+            $this->quantidade <= 5 => 'baixo',
+            default => 'disponivel'
+        };
     }
+
+    // public function getStatusAttribute()
+    // {
+    //     if (!$this->ativo) {
+    //         return 'inativo';
+    //     }
+
+    //     if ($this->quantidade === 0) {
+    //         return 'esgotado';
+    //     }
+
+    //     if ($this->quantidade <= 5) {
+    //         return 'baixo';
+    //     }
+
+    //     return 'disponivel';
+    // }
 }
