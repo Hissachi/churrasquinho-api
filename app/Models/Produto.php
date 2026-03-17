@@ -8,13 +8,18 @@ class Produto extends Model
 {
     protected $fillable = [
         'nome',
-        'categoria',
+        'categoria_id',
         'quantidade',
         'preco',
         'ativo'
     ];
 
     protected $appends = ['status'];
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 
     public function getStatusAttribute()
     {
@@ -25,21 +30,4 @@ class Produto extends Model
             default => 'disponivel'
         };
     }
-
-    // public function getStatusAttribute()
-    // {
-    //     if (!$this->ativo) {
-    //         return 'inativo';
-    //     }
-
-    //     if ($this->quantidade === 0) {
-    //         return 'esgotado';
-    //     }
-
-    //     if ($this->quantidade <= 5) {
-    //         return 'baixo';
-    //     }
-
-    //     return 'disponivel';
-    // }
 }
