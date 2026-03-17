@@ -155,12 +155,156 @@
                     "produtos"
                 ]
             }
+        },
+        "/categorias": {
+            "get": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "tags": [
+                    "categorias"
+                ]
+            },
+            "post": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "tags": [
+                    "categorias"
+                ]
+            }
+        },
+        "/categorias/{categoria}": {
+            "get": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "categoria",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "categorias"
+                ]
+            },
+            "put": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "categoria",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "categorias"
+                ]
+            },
+            "patch": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "categoria",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "categorias"
+                ]
+            },
+            "delete": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "categoria",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "categorias"
+                ]
+            }
         }
     },
     "tags": [],
     "components": {
         "schemas": {
-            "Produto": {
+            "Categoria": {
                 "type": "object",
                 "properties": {
                     "id": {
@@ -170,21 +314,9 @@
                     "nome": {
                         "type": "string"
                     },
-                    "categoria": {
-                        "type": "string"
-                    },
-                    "quantidade": {
-                        "type": "integer"
-                    },
-                    "preco": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "unidade": {
-                        "type": "string"
-                    },
-                    "ativo": {
-                        "type": "boolean"
+                    "parent_id": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "created_at": {
                         "type": "string",
@@ -197,11 +329,51 @@
                 },
                 "required": [
                     "id",
+                    "nome"
+                ]
+            },
+            "Produto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "quantidade": {
+                        "type": "integer"
+                    },
+                    "preco": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "categoria_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "status": {
+                        "type": "object",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "id",
                     "nome",
-                    "categoria",
                     "quantidade",
                     "preco",
-                    "unidade",
                     "ativo"
                 ]
             },
@@ -243,13 +415,6 @@
                     "email",
                     "password"
                 ]
-            }
-        },
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
             }
         }
     }
