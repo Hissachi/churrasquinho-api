@@ -10,16 +10,22 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
+    // 📌 Listar produtos
     public function index(Request $request)
     {
-        $query = Produto::query();
+        $query = Produto::with('categoria');
 
         if ($request->search) {
             $query->where('nome', 'like', "%{$request->search}%");
         }
 
-        if ($request->categoria) {
-            $query->where('categoria', $request->categoria);
+        if ($request->categoria_id) {
+            $query->whereIn('categoria_id', function ($q) use ($request) {
+                $q->select('id')
+                    ->from('categorias')
+                    ->where('id', $request->categoria_id)
+                    ->orWhere('parent_id', $request->categoria_id);
+            });
         }
 
         return $query->paginate($request->per_page ?? 10);
@@ -27,32 +33,49 @@ class ProdutoController extends Controller
 
     public function store(StoreProdutoRequest $request)
     {
-        $produto = Produto::create($request->validated());
+        $data = $request->validate([
+            'nome' => 'required|string|max:255',
+            'categoria_id' => 'nullable|exists:categorias,id',
+            'quantidade' => 'required|integer',
+            'preco' => 'required|numeric',
+            'ativo' => 'boolean',
+        ]);
 
-        return response()->json($produto, 201);
+        $produto = Produto::create($data);
+
+        return response()->json($produto->load('categoria'), 201);
     }
 
     public function show($id)
     {
-        return Produto::findOrFail($id);
+        return Produto::with('categoria')->findOrFail($id);
     }
 
     public function update(UpdateProdutoRequest $request, $id)
     {
         $produto = Produto::findOrFail($id);
 
-        $produto->update($request->validated());
+        $data = $request->validate([
+            'nome' => 'sometimes|string|max:255',
+            'categoria_id' => 'nullable|exists:categorias,id',
+            'quantidade' => 'sometimes|integer',
+            'preco' => 'sometimes|numeric',
+            'ativo' => 'boolean',
+        ]);
 
-        return response()->json($produto, 201);
+        $produto->update($data);
+
+        return response()->json($produto->load('categoria'));
     }
-
 
     public function destroy($id)
     {
-        Produto::destroy($id);
+        $produto = Produto::findOrFail($id);
+
+        $produto->delete();
 
         return response()->json([
-            "message" => "Produto deletado"
+            'message' => 'Produto deletado com sucesso',
         ]);
     }
 }
