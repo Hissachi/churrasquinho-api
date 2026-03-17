@@ -7,6 +7,7 @@ use App\Http\Requests\StoreDesperdicioRequest;
 use App\Http\Requests\UpdateDesperdicioRequest;
 use App\Models\Desperdicio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DesperdicioController extends Controller
 {
@@ -61,6 +62,45 @@ class DesperdicioController extends Controller
 
         return response()->json([
             'message' => 'Desperdício removido',
+        ]);
+    }
+
+    public function resumo(Request $request)
+    {
+        $query = DB::table('desperdicios');
+
+        if ($request->data) {
+            $query->whereDate('data', $request->data);
+        }
+
+        // total geral
+        $total = (clone $query)->sum('peso');
+
+        // total por origem
+        $porOrigem = (clone $query)
+            ->select('origem', DB::raw('SUM(peso) as total'))
+            ->groupBy('origem')
+            ->pluck('total', 'origem');
+
+        // total por tipo de resíduo
+        $porTipo = (clone $query)
+            ->select('tipo_residuo', DB::raw('SUM(peso) as total'))
+            ->groupBy('tipo_residuo')
+            ->pluck('total', 'tipo_residuo');
+
+        return response()->json([
+            'total_kg' => (float) $total,
+
+            'por_origem' => [
+                'interno' => (float) ($porOrigem['interno'] ?? 0),
+                'cliente' => (float) ($porOrigem['cliente'] ?? 0),
+            ],
+
+            'por_tipo' => [
+                'comida_pronta' => (float) ($porTipo['comida_pronta'] ?? 0),
+                'insumo_cru' => (float) ($porTipo['insumo_cru'] ?? 0),
+                'embalagem' => (float) ($porTipo['embalagem'] ?? 0),
+            ],
         ]);
     }
 }

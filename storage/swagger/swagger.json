@@ -699,6 +699,24 @@
                     "desperdicios"
                 ]
             }
+        },
+        "/desperdicios/resumo": {
+            "get": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "tags": [
+                    "desperdicios"
+                ]
+            }
         }
     },
     "tags": [],
