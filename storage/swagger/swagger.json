@@ -1,14 +1,14 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Laravel",
+        "title": "Churrasquinho",
         "description": "Documentation for the Application API",
         "version": "1.0.0"
     },
     "servers": [
         {
             "url": "http://127.0.0.1:8000/api",
-            "description": "Laravel Server #1"
+            "description": "Churrasquinho Server #1"
         }
     ],
     "paths": {
@@ -39,6 +39,37 @@
                     },
                     "401": {
                         "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "quantidade",
+                                    "preco"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "categoria_id": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "quantidade": {
+                                        "type": "integer"
+                                    },
+                                    "preco": {
+                                        "type": "number"
+                                    },
+                                    "ativo": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -97,6 +128,32 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "categoria_id": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "quantidade": {
+                                        "type": "integer"
+                                    },
+                                    "preco": {
+                                        "type": "number"
+                                    },
+                                    "ativo": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "tags": [
                     "produtos"
                 ]
@@ -124,6 +181,32 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "categoria_id": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "quantidade": {
+                                        "type": "integer"
+                                    },
+                                    "preco": {
+                                        "type": "number"
+                                    },
+                                    "ativo": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "tags": [
                     "produtos"
                 ]
@@ -185,6 +268,27 @@
                         "description": "(Unauthorized) Invalid or missing Access Token"
                     }
                 },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "tags": [
                     "categorias"
                 ]
@@ -241,6 +345,24 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "tags": [
                     "categorias"
                 ]
@@ -268,6 +390,24 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "tags": [
                     "categorias"
                 ]
@@ -297,6 +437,266 @@
                 ],
                 "tags": [
                     "categorias"
+                ]
+            }
+        },
+        "/desperdicios": {
+            "get": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "tags": [
+                    "desperdicios"
+                ]
+            },
+            "post": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tipo_residuo",
+                                    "peso",
+                                    "origem"
+                                ],
+                                "properties": {
+                                    "tipo_residuo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "comida_pronta",
+                                            "insumo_cru",
+                                            "embalagem"
+                                        ]
+                                    },
+                                    "peso": {
+                                        "type": "number"
+                                    },
+                                    "origem": {
+                                        "type": "string",
+                                        "enum": [
+                                            "interno",
+                                            "cliente"
+                                        ]
+                                    },
+                                    "observacao": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "data": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "desperdicios"
+                ]
+            }
+        },
+        "/desperdicios/{desperdicio}": {
+            "get": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "desperdicio",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "desperdicios"
+                ]
+            },
+            "put": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "desperdicio",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tipo_residuo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "comida_pronta",
+                                            "insumo_cru",
+                                            "embalagem"
+                                        ]
+                                    },
+                                    "peso": {
+                                        "type": "number"
+                                    },
+                                    "origem": {
+                                        "type": "string",
+                                        "enum": [
+                                            "interno",
+                                            "cliente"
+                                        ]
+                                    },
+                                    "observacao": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "data": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "desperdicios"
+                ]
+            },
+            "patch": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "desperdicio",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tipo_residuo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "comida_pronta",
+                                            "insumo_cru",
+                                            "embalagem"
+                                        ]
+                                    },
+                                    "peso": {
+                                        "type": "number"
+                                    },
+                                    "origem": {
+                                        "type": "string",
+                                        "enum": [
+                                            "interno",
+                                            "cliente"
+                                        ]
+                                    },
+                                    "observacao": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "data": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "desperdicios"
+                ]
+            },
+            "delete": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "desperdicio",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "desperdicios"
                 ]
             }
         }
@@ -330,6 +730,46 @@
                 "required": [
                     "id",
                     "nome"
+                ]
+            },
+            "Desperdicio": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tipo_residuo": {
+                        "type": "string"
+                    },
+                    "peso": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "origem": {
+                        "type": "string"
+                    },
+                    "observacao": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "id",
+                    "tipo_residuo",
+                    "peso",
+                    "origem"
                 ]
             },
             "Produto": {
