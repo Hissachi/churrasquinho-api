@@ -30,4 +30,9 @@ class Produto extends Model
             default => 'disponivel'
         };
     }
+
+    public function movimentacoes()
+    {
+        return $this->hasMany(Movimentacao::class);
+    }
 }
