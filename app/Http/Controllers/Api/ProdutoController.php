@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Produto;
 use App\Http\Requests\StoreProdutoRequest;
 use App\Http\Requests\UpdateProdutoRequest;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
-    // 📌 Listar produtos
     public function index(Request $request)
     {
         $query = Produto::with('categoria');
@@ -48,7 +47,9 @@ class ProdutoController extends Controller
 
     public function show($id)
     {
-        return Produto::with('categoria')->findOrFail($id);
+        return Produto::with(['categoria', 'movimentacoes' => function ($q) {
+            $q->latest()->limit(20);
+        }])->findOrFail($id);
     }
 
     public function update(UpdateProdutoRequest $request, $id)
