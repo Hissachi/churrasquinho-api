@@ -30,11 +30,11 @@ class DashboardController extends Controller
 
     private function movimentacoesHoje()
     {
-        return Movimentacao::whereDate('created_at', now())
+        return Movimentacao::whereDate('created_at', now()->format('Y-m-d'))
             ->selectRaw('
-                tipo,
-                SUM(quantidade) as total
-            ')
+            tipo,
+            SUM(quantidade) as total
+        ')
             ->groupBy('tipo')
             ->get();
     }

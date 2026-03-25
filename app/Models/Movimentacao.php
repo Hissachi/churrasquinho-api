@@ -8,8 +8,6 @@ class Movimentacao extends Model
 {
     protected $table = 'movimentacoes';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'produto_id',
         'tipo',
