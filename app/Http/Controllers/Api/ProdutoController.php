@@ -37,6 +37,7 @@ class ProdutoController extends Controller
             'categoria_id' => 'nullable|exists:categorias,id',
             'quantidade' => 'required|integer',
             'preco' => 'required|numeric',
+            'custo' => 'nullable|numeric',
             'ativo' => 'boolean',
         ]);
 
@@ -61,6 +62,7 @@ class ProdutoController extends Controller
             'categoria_id' => 'nullable|exists:categorias,id',
             'quantidade' => 'sometimes|integer',
             'preco' => 'sometimes|numeric',
+            'custo' => 'nullable|numeric',
             'ativo' => 'boolean',
         ]);
 
