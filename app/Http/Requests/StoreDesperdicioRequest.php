@@ -12,23 +12,29 @@ class StoreDesperdicioRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        if (!$this->data) {
-            $this->merge([
-                'data' => now()->toDateString()
-            ]);
-        }
-    }
-
     public function rules(): array
     {
         return [
-            'tipo_residuo' => 'required|in:comida_pronta,insumo_cru,embalagem',
+            'tipo_residuo' => 'nullable|in:comida_pronta,insumo_cru,embalagem',
             'peso' => 'required|numeric|min:0.01',
             'origem' => 'required|in:interno,cliente',
             'observacao' => 'nullable|string',
             'data' => 'nullable|date',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $origem = $this->input('origem');
+            $tipo = $this->input('tipo_residuo');
+
+            if ($origem === 'interno' && !$tipo) {
+                $validator->errors()->add(
+                    'tipo_residuo',
+                    'tipo_residuo é obrigatório quando origem é interno'
+                );
+            }
+        });
     }
 }
