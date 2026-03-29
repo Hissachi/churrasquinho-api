@@ -84,7 +84,10 @@ class DesperdicioController extends Controller
 
         // total por tipo de resíduo
         $porTipo = (clone $query)
-            ->select('tipo_residuo', DB::raw('SUM(peso) as total'))
+            ->select(
+                DB::raw('COALESCE(tipo_residuo, "misturado") as tipo_residuo'),
+                DB::raw('SUM(peso) as total')
+            )
             ->groupBy('tipo_residuo')
             ->pluck('total', 'tipo_residuo');
 
