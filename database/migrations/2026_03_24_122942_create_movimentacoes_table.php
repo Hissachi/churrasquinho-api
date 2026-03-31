@@ -13,19 +13,13 @@ return new class extends Migration
     {
         Schema::create('movimentacoes', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('produto_id')
                 ->constrained('produtos')
                 ->cascadeOnDelete();
-
             $table->enum('tipo', ['entrada', 'saida', 'perda']);
-
             $table->integer('quantidade');
-
             $table->decimal('custo_unitario', 10, 2)->nullable();
-
             $table->text('observacao')->nullable();
-
             $table->timestamp('created_at')->useCurrent();
         });
     }
